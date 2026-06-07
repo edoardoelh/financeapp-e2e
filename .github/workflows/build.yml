@@ -32,7 +32,7 @@ jobs:
         run: npx playwright install chromium --with-deps
 
       - name: Run smoke tests
-        run: cross-env BASE_URL=https://edoardoelh.github.io/Bank_MockUp npx cucumber-js --tags "@automated and @smoke and not @bug"
+        run: BASE_URL=https://edoardoelh.github.io/Bank_MockUp npx cucumber-js --tags "@automated and @smoke and not @bug"
 
       - name: Generate HTML report
         if: always()
