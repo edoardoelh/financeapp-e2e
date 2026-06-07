@@ -1,0 +1,26 @@
+{
+  "name": "financeapp-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "setup": "npm install && npx playwright install chromium",
+    "test": "npx cucumber-js",
+    "report": "ts-node scripts/generate-report.ts",
+    "cucumber:web:local:smoke": "cross-env PWDEBUG=0 TIMEOUT_STEP=30000 ACTION_TIMEOUT=10000 NAV_TIMEOUT=30000 npx cucumber-js --tags \"@automated and @smoke\" && ts-node scripts/generate-report.ts && echo \"Report generated at reports/html/index.html\"",
+    "cucumber:web:local:sanity": "cross-env PWDEBUG=0 TIMEOUT_STEP=30000 ACTION_TIMEOUT=10000 NAV_TIMEOUT=30000 npx cucumber-js --tags \"@automated and @sanity\" && ts-node scripts/generate-report.ts && echo \"Report generated at reports/html/index.html\"",
+    "cucumber:web:local:regression": "cross-env PWDEBUG=0 TIMEOUT_STEP=30000 ACTION_TIMEOUT=10000 NAV_TIMEOUT=30000 npx cucumber-js --tags \"@automated and @regression\" && ts-node scripts/generate-report.ts && echo \"Report generated at reports/html/index.html\"",
+    "cucumber:web:demo:smoke": "cross-env BASE_URL=https://edoardoelh.github.io/Bank_MockUp PWDEBUG=0 TIMEOUT_STEP=30000 ACTION_TIMEOUT=10000 NAV_TIMEOUT=30000 npx cucumber-js --tags \"@automated and @smoke\" && cross-env BASE_URL=https://edoardoelh.github.io/Bank_MockUp ts-node scripts/generate-report.ts && echo \"Report generated at reports/html/index.html\"",
+    "cucumber:web:demo:sanity": "cross-env BASE_URL=https://edoardoelh.github.io/Bank_MockUp PWDEBUG=0 TIMEOUT_STEP=30000 ACTION_TIMEOUT=10000 NAV_TIMEOUT=30000 npx cucumber-js --tags \"@automated and @sanity\" && cross-env BASE_URL=https://edoardoelh.github.io/Bank_MockUp ts-node scripts/generate-report.ts && echo \"Report generated at reports/html/index.html\"",
+    "cucumber:web:demo:regression": "cross-env BASE_URL=https://edoardoelh.github.io/Bank_MockUp PWDEBUG=0 TIMEOUT_STEP=30000 ACTION_TIMEOUT=10000 NAV_TIMEOUT=30000 npx cucumber-js --tags \"@automated and @regression\" && cross-env BASE_URL=https://edoardoelh.github.io/Bank_MockUp ts-node scripts/generate-report.ts && echo \"Report generated at reports/html/index.html\"",
+    "cucumber:web:debug": "cross-env PWDEBUG=1 TIMEOUT_STEP=3600000 ACTION_TIMEOUT=0 NAV_TIMEOUT=0 npx cucumber-js --tags \"@debug\" && ts-node scripts/generate-report.ts && echo \"Report generated at reports/html/index.html\""
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.9.0",
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.21",
+    "cross-env": "^7.0.3",
+    "multiple-cucumber-html-reporter": "^3.9.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
