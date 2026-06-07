@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Test output
+reports/
+
+# Environment
+.env
+
+# Editor
+.vscode/settings.local.json
+
+#Sonar
+sonar-project.properties
