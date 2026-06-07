@@ -1,19 +1,47 @@
-name: Build
+name: CI
+
 on:
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
 jobs:
-  sonarqube:
-    name: SonarQube
-    runs-on: windows-latest
+  test:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@7006c4492b2e0ee0f816d36501671557c97f5995 # v8.1.0
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Run smoke tests
+        run: cross-env BASE_URL=https://edoardoelh.github.io/Bank_MockUp npx cucumber-js --tags "@automated and @smoke and not @bug"
+
+      - name: Generate HTML report
+        if: always()
+        run: npx ts-node scripts/generate-report.ts
+
+      - name: Deploy report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./reports/html
+          publish_branch: gh-pages
