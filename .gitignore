@@ -13,5 +13,3 @@ reports/
 # Editor
 .vscode/settings.local.json
 
-#Sonar
-sonar-project.properties
