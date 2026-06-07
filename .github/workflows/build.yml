@@ -36,7 +36,7 @@ jobs:
 
       - name: Generate HTML report
         if: always()
-        run: npx ts-node scripts/generate-report.ts
+        run: BASE_URL=https://edoardoelh.github.io/Bank_MockUp npx ts-node scripts/generate-report.ts
 
       - name: Deploy report to GitHub Pages
         if: always()
